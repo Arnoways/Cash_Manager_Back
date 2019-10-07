@@ -36,6 +36,7 @@ help() {
   echo "logs\t\tgets java's logs."
   echo "clear\t\tWARNING: hard reset on everything. Kills containers, volumes (including database data), images and kittens."
   echo "help\t\tdisplays this message."
+  exit 0
 }
 
 if [ $# -eq 0 ]
