@@ -14,13 +14,13 @@ For convenience reasons, we made a script that allows us to run one or multiple 
 The script is available [here](cm_back.sh) for Linux and Mac, and [here](cm_back.ps1) for Windows (yet untested).
 
 ```shell
-usage: ./cm_back.sh [option]"
-available options:"
-build       re-compiles the code, should be followed by a restart."
-restart     restarts the java container - is needed to take modifications into account."
-up          triggers build then a restart."
-logs        gets java's logs."
-clear       WARNING: hard reset on everything. Kills containers, volumes (including database data), images and kittens."
-help        displays this message."
+usage: ./cm_back.sh [option]
+available options:
+build       re-compiles the code, should be followed by a restart.
+restart     restarts the java container - is needed to take modifications into account.
+up          triggers build then a restart.
+logs        gets java's logs.
+clear       WARNING: hard reset on everything. Kills containers, volumes (including database data), images and kittens.
+help        displays this message.
 
 ```
