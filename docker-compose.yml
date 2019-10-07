@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  bdd:
+    image: postgres
+    env_file:
+      - bdd.env
+    volumes:
+      - cash_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  maven:
+    build:
+      context: .
+      dockerfile: docker-maven/Dockerfile
+    volumes:
+      - mvn_cache:/root/.m2
+      - jar_dir:/dist
+
+  back:
+    build:
+      context: .
+      dockerfile: docker-java/Dockerfile
+    env_file:
+      - bdd.env
+    volumes:
+      - jar_dir:/dist
+
+volumes:
+  cash_data:
+  mvn_cache:
+  jar_dir:
