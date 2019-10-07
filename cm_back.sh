@@ -30,7 +30,7 @@ up() {
 help() {
   echo "usage: ./cm_back.sh [option]"
   echo "available options:"
-  echo "build\t\tpre-compiles the code, should be followed by a restart."
+  echo "build\t\tre-compiles the code, should be followed by a restart."
   echo "restart\t\trestarts the java container - is needed to take modifications into account."
   echo "up\t\ttriggers build then a restart."
   echo "logs\t\tgets java's logs."

@@ -28,7 +28,7 @@ function up {
 function help {
   write-host "usage: ./cm_back.ps1 [option]"
   write-host "available options:"
-  write-host "build     pre-compiles the code, should be followed by a restart."
+  write-host "build     re-compiles the code, should be followed by a restart."
   write-host "restart   restarts the java container - is needed to take modifications into account."
   write-host "up        triggers build then a restart."
   write-host "logs      gets java's logs."
