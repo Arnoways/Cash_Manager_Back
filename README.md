@@ -13,7 +13,7 @@ We currently have 3 containers:
 For convenience reasons, we made a script that allows us to run one or multiple docker-compose commands which will be useful during our development process.  
 The script is available [here](cm_back.sh) for Linux and Mac, and [here](cm_back.ps1) for Windows (yet untested).
 
-```shell
+```
 usage: ./cm_back.sh [option]
 available options:
 build       re-compiles the code, should be followed by a restart.
