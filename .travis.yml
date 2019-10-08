@@ -23,3 +23,7 @@ deploy:
   script: ssh -i "/tmp/cashmanager.pem" ubuntu@ec2-3-231-177-119.compute-1.amazonaws.com Cash_Manager_Back/cm_back.sh deploy
   on:
     branch: master
+
+
+notifications:
+  webhooks: https://outlook.office.com/webhook/74c3e175-04fd-4354-9853-c22825e27fe6@901cb4ca-b862-4029-9306-e5cd0f6d9f86/TravisCI/4ce65c5457324b6995fdff7df323761c/6d65da65-2cda-4dbd-bff5-fbaea78c2ff8
