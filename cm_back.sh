@@ -28,6 +28,7 @@ up() {
 }
 
 deploy() {
+  cd ~/Cash_Manager_Back
   git pull
   up
 }
@@ -50,6 +51,6 @@ if [ $# -eq 0 ]
 fi
 
 case $1 in
-  build|restart|logs|clear|up|help) $1;;
+  build|restart|logs|clear|up|help|deploy) $1;;
   *) help;;
 esac
