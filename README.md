@@ -1,4 +1,5 @@
 # Cash_Manager_Back
+[![Build Status](https://travis-ci.org/Arnoways/Cash_Manager_Back.svg?branch=master)](https://travis-ci.org/Arnoways/Cash_Manager_Back)
 
 ## How to run our server
 
