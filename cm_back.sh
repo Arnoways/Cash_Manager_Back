@@ -27,6 +27,11 @@ up() {
   restart
 }
 
+deploy() {
+  git pull
+  up
+}
+
 help() {
   echo "usage: ./cm_back.sh [option]"
   echo "available options:"

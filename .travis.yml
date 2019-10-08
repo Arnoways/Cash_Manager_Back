@@ -1,0 +1,24 @@
+---
+branches:
+  only:
+  - master
+
+services:
+  - docker
+
+addons:
+  ssh_known_hosts: ec2-3-231-177-119.compute-1.amazonaws.com
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_1decbcc74e76_key -iv $encrypted_1decbcc74e76_iv -in cashmanager.pem.enc -out /tmp/cashmanager.pem -d
+
+script:
+  - ./cm_back.sh up
+  - docker-compose ps
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ssh -i "/tmp/cashmanager.pem" ubuntu@ec2-3-231-177-119.compute-1.amazonaws.com sh Cash_Manager_Back/cm_back.sh deploy
+  on:
+    branch: master
