@@ -6,13 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "cart")
 @JsonIgnoreProperties(allowGetters = true)
 
 public class Cart implements Serializable {
+    public Cart() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +23,7 @@ public class Cart implements Serializable {
     private User user;
 
     @NotBlank
-    private List<Product> products;
+    private Product product;
 
     @NotBlank
     private int quantity;
@@ -46,9 +48,9 @@ public class Cart implements Serializable {
         return this.user;
     }
 
-    public List<Product> getProducts()
+    public Product getProduct()
     {
-        return this.products;
+        return this.product;
     }
 
     public int getQuantity()
@@ -81,9 +83,9 @@ public class Cart implements Serializable {
         this.user = user;
     }
 
-    public void setProducts(List<Product> products)
+    public void setProduct(Product product)
     {
-        this.products = products;
+        this.product = product;
     }
 
     public void setQuantity(int quantity)

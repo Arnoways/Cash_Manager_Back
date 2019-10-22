@@ -13,6 +13,9 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 
+    public Product() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,14 +23,12 @@ public class Product implements Serializable {
     @NotBlank
     private String name;
 
-    @NotBlank
     private String image;
 
-    @NotBlank
     private Double price;
 
-    @NotBlank
     private Double price_without_taxes;
+
 
     public Long getId()
     {

@@ -10,7 +10,11 @@ import java.io.Serializable;
 @JsonIgnoreProperties(allowGetters = true)
 
 public class User implements Serializable {
+    public User() {
+    }
+
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
