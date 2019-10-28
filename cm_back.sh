@@ -33,6 +33,15 @@ deploy() {
   up
 }
 
+apk() {
+  if [ ! -d "../Cash_Manager_Front" ]; then
+    echo "Folder cash manager doesn't exists! Downloading..."
+    git clone git@github.com:Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front || git clone https://github.com/Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front
+  fi
+  docker-compose build gradle
+  docker-compose up gradle
+}
+
 help() {
   echo "usage: ./cm_back.sh [option]"
   echo "available options:"
@@ -42,6 +51,7 @@ help() {
   echo "logs\t\tgets java's logs."
   echo "clear\t\tWARNING: hard reset on everything. Kills containers, volumes (including database data), images and kittens."
   echo "help\t\tdisplays this message."
+  echo "apk\t\tbuilds front code into an apk."
   exit 0
 }
 
@@ -51,6 +61,6 @@ if [ $# -eq 0 ]
 fi
 
 case $1 in
-  build|restart|logs|clear|up|help|deploy) $1;;
+  build|restart|logs|clear|up|help|deploy|apk) $1;;
   *) help;;
 esac
