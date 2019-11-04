@@ -1,4 +1,4 @@
-package com.epitech.cash_manager;
+package eu.epitech.cashmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

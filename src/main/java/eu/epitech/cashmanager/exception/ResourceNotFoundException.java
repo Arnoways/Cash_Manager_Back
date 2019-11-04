@@ -1,4 +1,4 @@
-package com.epitech.cash_manager.exception;
+package eu.epitech.cashmanager.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

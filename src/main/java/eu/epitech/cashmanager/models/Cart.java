@@ -1,4 +1,4 @@
-package com.epitech.cash_manager.models;
+package eu.epitech.cashmanager.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
