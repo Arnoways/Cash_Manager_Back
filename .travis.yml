@@ -14,6 +14,7 @@ before_install:
   - chmod 400 /tmp/cashmanager.pem
 
 script:
+  - ./cm_back.sh apk
   - ./cm_back.sh up
   - docker-compose ps
 
