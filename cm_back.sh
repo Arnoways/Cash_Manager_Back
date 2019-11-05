@@ -31,6 +31,7 @@ deploy() {
   cd ~/Cash_Manager_Back
   git pull
   up
+  apk
 }
 
 apk() {
