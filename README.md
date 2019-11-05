@@ -22,7 +22,6 @@ restart     restarts the java container - is needed to take modifications into a
 up          triggers build then a restart.
 logs        gets java's logs.
 clear       WARNING: hard reset on everything. Kills containers, volumes (including database data), images and kittens.
-apk         builds front code into an apk.
 help        displays this message.
 
 ```

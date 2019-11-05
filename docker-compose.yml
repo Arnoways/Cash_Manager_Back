@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bdd:
-    image: postgres:11
+    image: postgres
     env_file:
       - bdd.env
     volumes:

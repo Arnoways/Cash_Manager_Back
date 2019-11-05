@@ -1,4 +1,4 @@
-FROM maven:3.6.2-jdk-11
+FROM maven:3.6.2-jdk-11 AS build
 WORKDIR /usr/src/app/
 COPY src/ src/
 COPY pom.xml .
