@@ -40,8 +40,7 @@ public class UserController {
         user.setPassword(userDetails.getPassword());
         user.setStatus(userDetails.getStatus());
 
-        User updatedUser = userRepository.save(user);
-        return updatedUser;
+        return userRepository.save(user);
     }
 
     @DeleteMapping(value = "/api/users/{id}")
