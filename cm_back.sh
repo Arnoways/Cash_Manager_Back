@@ -28,7 +28,7 @@ up() {
 }
 
 deploy() {
-  cd ~/Cash_Manager_Back
+  cd $(pwd)/Cash_Manager_Back
   git pull
   apk
   up
