@@ -34,7 +34,7 @@ services:
       context: ../Cash_Manager_Front
     volumes:
       - ../Cash_Manager_Front/:/app
-      - apk_dir:/app/build/outputs/apk/
+      - apk_dir:/apk
 
 volumes:
   cash_data:
