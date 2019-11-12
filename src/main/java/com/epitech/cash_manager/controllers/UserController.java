@@ -1,8 +1,8 @@
-package eu.epitech.cashmanager.controllers;
+package com.epitech.cash_manager.controllers;
 
-import eu.epitech.cashmanager.exception.ResourceNotFoundException;
-import eu.epitech.cashmanager.models.User;
-import eu.epitech.cashmanager.repository.UserRepository;
+import com.epitech.cash_manager.exception.ResourceNotFoundException;
+import com.epitech.cash_manager.models.User;
+import com.epitech.cash_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +37,7 @@ public class UserController {
     {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         user.setLogin(userDetails.getLogin());
-        user.setPassword(userDetails.getPassword());
-        user.setStatus(userDetails.getStatus());
+        user.setPwd(userDetails.getPwd());
 
         return userRepository.save(user);
     }

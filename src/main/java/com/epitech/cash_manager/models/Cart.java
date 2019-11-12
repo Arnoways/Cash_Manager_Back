@@ -1,4 +1,4 @@
-package eu.epitech.cashmanager.models;
+package com.epitech.cash_manager.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart")
@@ -19,11 +21,11 @@ public class Cart implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @OneToOne(mappedBy = "cart")
     private User user;
 
-    @NotBlank
-    private Product product;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
+    private Set<Product> product = new HashSet<>();
 
     @NotBlank
     private int quantity;
@@ -43,15 +45,7 @@ public class Cart implements Serializable {
         return this.id;
     }
 
-    public User getUser()
-    {
-        return this.user;
-    }
 
-    public Product getProduct()
-    {
-        return this.product;
-    }
 
     public int getQuantity()
     {
@@ -78,15 +72,6 @@ public class Cart implements Serializable {
         this.id = id;
     }
 
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
-
-    public void setProduct(Product product)
-    {
-        this.product = product;
-    }
 
     public void setQuantity(int quantity)
     {
@@ -109,6 +94,20 @@ public class Cart implements Serializable {
     }
 
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
+    public Set<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(Set<Product> product) {
+        this.product = product;
+    }
 }

@@ -1,4 +1,4 @@
-package eu.epitech.cashmanager.models;
+package com.epitech.cash_manager.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,7 +20,11 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+
+
     private String name;
 
     private String image;
