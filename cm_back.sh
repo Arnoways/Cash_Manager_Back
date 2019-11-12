@@ -35,7 +35,7 @@ deploy() {
 }
 
 apk() {
-  if [ ! -d "~/Cash_Manager_Front" ]; then
+  if [ ! -d "../Cash_Manager_Front" ]; then
     echo "Folder cash manager doesn't exists! Downloading..."
     git clone git@github.com:Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front || git clone https://github.com/Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front
   fi
@@ -56,7 +56,7 @@ help() {
   exit 0
 }
 
-if [ $# -eq 0 ]
+if [ $# -ne 1 ]
   then
     help
 fi

@@ -33,7 +33,7 @@ services:
     build:
       context: ../Cash_Manager_Front
     volumes:
-      - ../Cash_Manager_Front:/app
+      - ../Cash_Manager_Front/:/app
       - apk_dir:/app/build/outputs/apk/
 
 volumes:
