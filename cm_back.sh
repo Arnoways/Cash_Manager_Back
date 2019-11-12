@@ -38,6 +38,7 @@ apk() {
   if [ ! -d "../Cash_Manager_Front" ]; then
     echo "Folder cash manager doesn't exists! Downloading..."
     git clone git@github.com:Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front || git clone https://github.com/Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front
+    git checkout develop
   fi
   docker-compose build gradle
   docker-compose up gradle
