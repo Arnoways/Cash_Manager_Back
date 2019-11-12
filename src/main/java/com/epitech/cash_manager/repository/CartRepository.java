@@ -1,6 +1,6 @@
-package eu.epitech.cashmanager.repository;
+package com.epitech.cash_manager.repository;
 
-import eu.epitech.cashmanager.models.Cart;
+import com.epitech.cash_manager.models.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

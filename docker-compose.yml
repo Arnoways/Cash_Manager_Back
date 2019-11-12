@@ -27,14 +27,7 @@ services:
       - jar_dir:/dist
       - apk_dir:/apk
     ports:
-      - "8080:8080"
-
-  gradle:
-    build:
-      context: ../Cash_Manager_Front
-    volumes:
-      - ../Cash_Manager_Front:/app
-      - apk_dir:/app/build/outputs/apk/
+      - "8081:8080"
 
 volumes:
   cash_data:

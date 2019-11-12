@@ -1,8 +1,8 @@
-package eu.epitech.cashmanager.controllers;
+package com.epitech.cash_manager.controllers;
 
-import eu.epitech.cashmanager.exception.ResourceNotFoundException;
-import eu.epitech.cashmanager.models.Product;
-import eu.epitech.cashmanager.repository.ProductRepository;
+import com.epitech.cash_manager.exception.ResourceNotFoundException;
+import com.epitech.cash_manager.models.Product;
+import com.epitech.cash_manager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
