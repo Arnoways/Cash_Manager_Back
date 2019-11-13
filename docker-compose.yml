@@ -19,13 +19,11 @@ services:
 
   back:
     build:
-      context: .
-      dockerfile: docker-java/Dockerfile
+      context: docker-java
     env_file:
       - bdd.env
     volumes:
       - jar_dir:/dist
-      - apk_dir:/apk
     ports:
       - "8080:8080"
 
@@ -34,10 +32,8 @@ services:
       context: ../Cash_Manager_Front
     volumes:
       - ../Cash_Manager_Front/:/app
-      - apk_dir:/apk
 
 volumes:
   cash_data:
   mvn_cache:
   jar_dir:
-  apk_dir:

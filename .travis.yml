@@ -21,7 +21,9 @@ script:
 deploy:
   provider: script
   skip_cleanup: true
-  script: ssh -i "/tmp/cashmanager.pem" ubuntu@ec2-3-231-177-119.compute-1.amazonaws.com nohup Cash_Manager_Back/cm_back.sh deploy &
+  script: 
+    - scp -i "/tmp/cashmanager.pem" ../Cash_Manager_Front/app/build/outputs/apk/release/app-release-unsigned.apk ubuntu@ec2-3-231-177-119.compute-1.amazonaws.com:/home/ubuntu/Cash_Manager_Back/docker-java/app.apk
+    - ssh -i "/tmp/cashmanager.pem" ubuntu@ec2-3-231-177-119.compute-1.amazonaws.com Cash_Manager_Back/cm_back.sh deploy
   on:
     branch: master
 
