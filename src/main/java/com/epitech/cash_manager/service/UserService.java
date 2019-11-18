@@ -6,6 +6,7 @@ import com.epitech.cash_manager.dao.UserDAO;
 import com.epitech.cash_manager.dto.UserRequestDto;
 import com.epitech.cash_manager.dto.UserResponseDto;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
+import com.epitech.cash_manager.models.Cart;
 import com.epitech.cash_manager.models.User;
 import com.epitech.cash_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UserService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    CartService cartService;
 
     /*@Autowired
     private PasswordEncoder passwordEncoder;*/
@@ -56,6 +60,8 @@ public class UserService {
             user.setLogin(in.getLogin());
             //user.setPwd(passwordEncoder.encode(in.getPwd()));
             user.setPwd(in.getPwd());
+            Cart cart = cartService.createCart();
+            user.setCart(cart);
             userRepository.save(user);
         }
         return new UserResponseDto(user.getId(), user.getEmail(), user.getLogin());
@@ -79,7 +85,7 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        userRepository.save(user);
+        //userRepository.save(user);
     }
 
     public User getUserById(Long userID) {
@@ -90,6 +96,12 @@ public class UserService {
     public void deleteUser(Long userID) {
         User user = userRepository.findById(userID).orElseThrow(() -> new ResourceNotFoundException("User", "userID",userID));
         userRepository.delete(user);
+    }
+
+    public Cart getCart(Long userId)
+    {
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "userID",userId));
+        return user.getCart();
     }
 
 }

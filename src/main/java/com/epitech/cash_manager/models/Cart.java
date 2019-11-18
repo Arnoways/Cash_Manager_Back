@@ -2,9 +2,9 @@ package com.epitech.cash_manager.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,16 +27,10 @@ public class Cart implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
     private Set<Product> product = new HashSet<>();
 
-    @NotBlank
-    private int quantity;
+    @Value("0")
+    private Long quantity;
 
-    @NotBlank
-    private Double total_without_taxes;
-
-    @NotBlank
-    private Double total_taxes;
-
-    @NotBlank
+    @Value("0")
     private Double total;
 
 
@@ -47,20 +41,11 @@ public class Cart implements Serializable {
 
 
 
-    public int getQuantity()
+    public Long getQuantity()
     {
         return this.quantity;
     }
 
-    public Double getTotal_without_taxes()
-    {
-        return this.total_without_taxes;
-    }
-
-    public Double getTotal_taxes()
-    {
-        return this.total_taxes;
-    }
 
     public Double getTotal()
     {
@@ -73,20 +58,11 @@ public class Cart implements Serializable {
     }
 
 
-    public void setQuantity(int quantity)
+    public void setQuantity(Long quantity)
     {
         this.quantity = quantity;
     }
 
-    public void setTotal_without_taxes(Double total_without_taxes)
-    {
-        this.total_without_taxes = total_without_taxes;
-    }
-
-    public void setTotal_taxes(Double total_taxes)
-    {
-        this.total_taxes = total_taxes;
-    }
 
     public void setTotal(Double total)
     {

@@ -2,8 +2,11 @@ package com.epitech.cash_manager.controllers;
 
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Product;
+import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +19,28 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
-    @GetMapping(value = "/api/product")
+    @Autowired
+    CartRepository cartRepository;
+
+    @GetMapping("/api/carts/{cartId}/products")
+    public Page<Product> getAllProductByCartId(@PathVariable (value = "cartId") Long cartId,
+                                                Pageable pageable) {
+        return productRepository.findByCartId(cartId, pageable);
+    }
+
+    @GetMapping(value = "/api/products")
     public Iterable<Product> getAllProducts()
     {
         return productRepository.findAll();
+    }
+
+    @PostMapping("/api/carts/{cartId}/product")
+    public Product createProductWithCartId(@PathVariable (value = "cartId") Long cartId,
+                                 @Valid @RequestBody Product product) {
+        return cartRepository.findById(cartId).map(cart -> {
+            product.setCart(cart);
+            return productRepository.save(product);
+        }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
 
     @PostMapping(value="/api/product")
@@ -28,10 +49,26 @@ public class ProductController {
         return productRepository.save(product);
     }
 
-    @GetMapping(value="api/product/{id}")
+    @GetMapping(value="/api/product/{id}")
     public Product getProductById(@PathVariable(value="id") Long productId)
     {
         return productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
+    }
+
+    @PutMapping("/carts/{cartId}/products/{productId}")
+    public Product updateProductWithCartId(@PathVariable (value = "cartId") Long cartId,
+                                 @PathVariable (value = "productId") Long productId,
+                                 @Valid @RequestBody Product productRequest) {
+        if(!cartRepository.existsById(cartId)) {
+            throw new ResourceNotFoundException("Cart", "id", cartId);
+        }
+
+        return productRepository.findById(productId).map(product -> {
+            product.setName(productRequest.getName());
+            product.setImage(productRequest.getImage());
+            product.setPrice(productRequest.getPrice());
+            return productRepository.save(product);
+        }).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }
 
     @PutMapping("/api/product/{id}")
@@ -41,10 +78,19 @@ public class ProductController {
         product.setName(productDetails.getName());
         product.setImage(productDetails.getImage());
         product.setPrice(productDetails.getPrice());
-        product.setPrice_without_taxes(productDetails.getPrice_without_taxes());
+
 
         Product updatedProduct = productRepository.save(product);
         return updatedProduct;
+    }
+
+    @DeleteMapping("/api/carts/{cartId}/products/{productId}")
+    public ResponseEntity<?> deleteProductWithCartId(@PathVariable (value = "cartId") Long cartId,
+                                           @PathVariable (value = "productId") Long productId) {
+        return productRepository.findByIdAndCartId(productId, cartId).map(product -> {
+            productRepository.delete(product);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }
 
     @DeleteMapping("/api/product/{id}")
