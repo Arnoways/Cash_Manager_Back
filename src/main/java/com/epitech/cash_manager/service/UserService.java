@@ -14,9 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.UUID;
-
-
 @Service
 public class UserService {
     @Autowired
@@ -47,18 +44,14 @@ public class UserService {
 
     public UserResponseDto createUser(UserRequestDto in) {
         User user = null;
-        Long userID = null;
         if (in.getLogin().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Incorrect value for login");
         } else if (getUserByEmail(in.getEmail()) != null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This email is already used");
         } else {
             user = new User();
-            userID = UUID.randomUUID().timestamp();
-            user.setId(userID);
             user.setEmail(in.getEmail().toLowerCase());
             user.setLogin(in.getLogin());
-            //user.setPwd(passwordEncoder.encode(in.getPwd()));
             user.setPwd(in.getPwd());
             Cart cart = cartService.createCart();
             user.setCart(cart);
@@ -66,8 +59,6 @@ public class UserService {
         }
         return new UserResponseDto(user.getId(), user.getEmail(), user.getLogin());
     }
-
-
 
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();

@@ -2,11 +2,11 @@ package com.epitech.cash_manager.dto;
 
 public class UserResponseDto {
 
-    Long userID;
+    private Long userID;
 
-    String email;
+    private String email;
 
-    String login;
+    private String login;
 
     public UserResponseDto() {}
 

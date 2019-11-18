@@ -25,7 +25,7 @@ public class CartService {
     @Autowired
     UserService userService;
 
-    Cart cart = new Cart();
+    private Cart cart = new Cart();
     public Set<Product> getAllProduct()
     {
         return cart.getProduct();

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank
@@ -40,8 +40,6 @@ public class User {
     public String getPwd() {
         return pwd;
     }
-
-    public void setId(Long userID) { this.id = userID; }
 
     public void setLogin(String login) {
         this.login = login;
