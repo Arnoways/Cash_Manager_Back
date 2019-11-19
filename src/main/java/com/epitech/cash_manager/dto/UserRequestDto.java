@@ -2,11 +2,11 @@ package com.epitech.cash_manager.dto;
 
 public class UserRequestDto {
 
-    String email;
+    private String email;
 
-    String login;
+    private String login;
 
-    String pwd;
+    private String pwd;
 
     public UserRequestDto() {}
 

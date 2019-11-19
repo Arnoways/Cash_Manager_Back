@@ -40,12 +40,9 @@ public class CartController{
         cart.setProduct(cartDetails.getProduct());
         cart.setQuantity(cartDetails.getQuantity());
         cart.setTotal(cartDetails.getTotal());
-        cart.setTotal_without_taxes(cartDetails.getTotal_without_taxes());
-        cart.setTotal_taxes(cartDetails.getTotal_taxes());
         cart.setTotal(cartDetails.getTotal());
 
-        Cart updatedCart = cartRepository.save(cart);
-        return updatedCart;
+        return cartRepository.save(cart);
     }
 
     @DeleteMapping(value = "/api/carts/{id}")

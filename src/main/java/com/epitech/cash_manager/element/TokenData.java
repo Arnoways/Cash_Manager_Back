@@ -2,11 +2,11 @@ package com.epitech.cash_manager.element;
 
 public class TokenData {
 
-    String userID;
+    private String userID;
 
-    String xsrfToken;
+    private String xsrfToken;
 
-    long expireDate;
+    private long expireDate;
 
     public TokenData() {}
 
