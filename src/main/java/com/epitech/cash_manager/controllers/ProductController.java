@@ -26,11 +26,35 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/api/product/all")
+
+    @PostMapping(value="/api/products")
+    public Product createProduct(@Valid @RequestBody Product product)
+    {
+        return productService.createProduct(product);
+    }
+
+
+    @GetMapping(value = "/api/products/all")
     public Iterable<Product> getAllProduct()
     {
         return productService.getAllProducts();
     }
+
+
+    @GetMapping(value="/api/products/{id}")
+    public Product getProductById(@PathVariable(value="id") Long productId)
+    {
+        return productService.getProductById(productId);
+    }
+
+
+    @GetMapping()
+    @ResponseBody
+    public Product getProductByName(@PathVariable(value = "name") String name)
+    {
+        return productService.getProductByName(name);
+    }
+
 
     @GetMapping("/api/carts/{cartId}/products")
     public Page<Product> getAllProductByCartId(@PathVariable (value = "cartId") Long cartId,
@@ -38,32 +62,18 @@ public class ProductController {
         return productRepository.findByCartId(cartId, pageable);
     }
 
-    @GetMapping(value = "/api/products")
-    public Iterable<Product> getAllProducts()
-    {
-        return productRepository.findAll();
-    }
 
-    @PostMapping("/api/carts/{cartId}/product")
+
+    @PostMapping("/api/carts/{cartId}/{productId}")
     public Product createProductWithCartId(@PathVariable (value = "cartId") Long cartId,
-                                 @Valid @RequestBody Product product) {
+                                           @PathVariable (value = "productId") Long productId) {
+        Product product = productService.getProductById(productId);
         return cartRepository.findById(cartId).map(cart -> {
             product.setCart(cart);
             return productRepository.save(product);
         }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
 
-    @PostMapping(value="/api/product")
-    public Product createProduct(@Valid @RequestBody Product product)
-    {
-        return productRepository.save(product);
-    }
-
-    @GetMapping(value="/api/product/{id}")
-    public Product getProductById(@PathVariable(value="id") Long productId)
-    {
-        return productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-    }
 
     @PutMapping("/carts/{cartId}/products/{productId}")
     public Product updateProductWithCartId(@PathVariable (value = "cartId") Long cartId,
@@ -102,18 +112,11 @@ public class ProductController {
     }
 
     @DeleteMapping("/api/product/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value="id") Long productId)
+    public Product deleteProduct(@PathVariable(value="id") Long productId)
     {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
         productRepository.delete(product);
 
-        return ResponseEntity.ok().build();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/api/product/{name}")
-    @ResponseBody
-    public Product getProductByName(@PathVariable(value = "name") String name)
-    {
-        return productService.getProductByName(name);
+        return product;
     }
 }

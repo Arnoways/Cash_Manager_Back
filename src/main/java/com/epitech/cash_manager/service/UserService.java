@@ -28,15 +28,6 @@ public class UserService {
     @Autowired
     CartService cartService;
 
-    /*@Autowired
-    private PasswordEncoder passwordEncoder;*/
-
-
-    public User getUserByEmail(String email) {
-
-        return userDAO.findByEmail(email);
-    }
-
 
     public UserResponseDto createUser(UserRequestDto in) {
         User user = null;
@@ -55,6 +46,13 @@ public class UserService {
         }
         return new UserResponseDto(user.getId(), user.getEmail(), user.getLogin());
     }
+
+
+    public User getUserByEmail(String email) {
+
+        return userDAO.findByEmail(email);
+    }
+
 
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
@@ -80,10 +78,6 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userID", userID));
     }
 
-    public void deleteUser(Long userID) {
-        User user = userRepository.findById(userID).orElseThrow(() -> new ResourceNotFoundException("User", "userID",userID));
-        userRepository.delete(user);
-    }
 
     public Cart getCart(Long userId)
     {

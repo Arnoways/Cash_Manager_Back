@@ -25,18 +25,19 @@ public class CartController{
         return cartRepository.findAll();
     }
 
+
     @PostMapping(value = "/api/carts")
     public Cart createCart(@Valid @RequestBody Cart cart)
     {
         return cartRepository.save(cart);
     }
 
-    @PostMapping(value = "/api/carts/{userId}/{productId}")
-    public boolean addProductToCart(@PathVariable(value = "userId") Long userId,
-                                    @PathVariable(value = "productId") Long productId)
-    {
-        return cartService.addToCart(userId,productId);
-    }
+    //@PostMapping(value = "/api/carts/{userId}/{productId}")
+    //public boolean addProductToCart(@PathVariable(value = "userId") Long userId,
+                                    //@PathVariable(value = "productId") Long productId)
+    //{
+        //return cartService.addToCart(userId,productId);
+    //}
 
 
     @GetMapping(value = "/api/carts/{id}")
@@ -56,13 +57,8 @@ public class CartController{
         cart.setQuantity(cartDetails.getQuantity());
         cart.setTotal(cartDetails.getTotal());
         cart.setTotal(cartDetails.getTotal());
-<<<<<<< HEAD
         Cart updatedCart = cartRepository.save(cart);
         return updatedCart;
-=======
-
-        return cartRepository.save(cart);
->>>>>>> e1de2101a05a30b6ad8d1d93a7c48e3b0a953f8b
     }
 
     @DeleteMapping(value = "/api/carts/{id}")

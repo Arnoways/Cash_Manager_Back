@@ -20,29 +20,34 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @GetMapping(value="/api/users")
     public Iterable<User> getAllUsers()
     {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
-    @PostMapping(value="/api/users")
-    public User createUser (@Valid @RequestBody User user)
-    {
-        return userRepository.save(user);
-    }
+
+    //@PostMapping(value="/api/users")
+    //public User createUser (@Valid @RequestBody User user)
+    //{
+        //return userRepository.save(user);
+    //}
+
 
     @GetMapping(value="api/users/{id}")
     public User getUserById(@PathVariable(value = "id") Long userId)
     {
-        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        return userService.getUserById(userId);
     }
+
 
     @PostMapping(value = "/api/users/create")
     public UserResponseDto createUserWithCart(@RequestBody UserRequestDto user)
     {
         return userService.createUser(user);
     }
+
 
     @PutMapping(value = "/api/users/{id}")
     public User updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails)

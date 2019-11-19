@@ -1,5 +1,7 @@
 package com.epitech.cash_manager.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -22,7 +24,8 @@ public class User {
     @NotBlank
     private String pwd;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
+    @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
@@ -54,7 +57,7 @@ public class User {
     }
 
     public Cart getCart() {
-        return cart;
+        return this.cart;
     }
 
     public void setCart(Cart cart) {
