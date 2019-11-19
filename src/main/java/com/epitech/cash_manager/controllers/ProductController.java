@@ -89,9 +89,7 @@ public class ProductController {
         product.setImage(productDetails.getImage());
         product.setPrice(productDetails.getPrice());
 
-
-        Product updatedProduct = productRepository.save(product);
-        return updatedProduct;
+        return productRepository.save(product);
     }
 
     @DeleteMapping("/api/carts/{cartId}/products/{productId}")

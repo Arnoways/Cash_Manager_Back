@@ -56,8 +56,13 @@ public class CartController{
         cart.setQuantity(cartDetails.getQuantity());
         cart.setTotal(cartDetails.getTotal());
         cart.setTotal(cartDetails.getTotal());
+<<<<<<< HEAD
         Cart updatedCart = cartRepository.save(cart);
         return updatedCart;
+=======
+
+        return cartRepository.save(cart);
+>>>>>>> e1de2101a05a30b6ad8d1d93a7c48e3b0a953f8b
     }
 
     @DeleteMapping(value = "/api/carts/{id}")
