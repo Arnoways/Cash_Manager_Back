@@ -4,6 +4,7 @@ set -e
 
 build() {
   docker-compose up --build maven
+  docker-compose build back
 }
 
 restart() {
