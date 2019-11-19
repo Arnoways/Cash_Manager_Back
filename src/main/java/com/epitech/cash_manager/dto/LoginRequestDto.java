@@ -5,9 +5,9 @@ public class LoginRequestDto {
     public LoginRequestDto() {
     }
 
-    String email;
+    private String email;
 
-    String pwd;
+    private String pwd;
 
     public String getEmail() {
         return email;
