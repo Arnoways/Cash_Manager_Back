@@ -37,10 +37,6 @@ public class UserService {
         return userDAO.findByEmail(email);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
 
     public UserResponseDto createUser(UserRequestDto in) {
         User user = null;

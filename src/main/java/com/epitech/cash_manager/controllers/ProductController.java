@@ -4,6 +4,7 @@ import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.ProductRepository;
+import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,15 @@ public class ProductController {
 
     @Autowired
     CartRepository cartRepository;
+
+    @Autowired
+    ProductService productService;
+
+    @RequestMapping(method = RequestMethod.GET, value = "/api/product/all")
+    public Iterable<Product> getAllProduct()
+    {
+        return productService.getAllProducts();
+    }
 
     @GetMapping("/api/carts/{cartId}/products")
     public Page<Product> getAllProductByCartId(@PathVariable (value = "cartId") Long cartId,
@@ -100,5 +110,12 @@ public class ProductController {
         productRepository.delete(product);
 
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/api/product/{name}")
+    @ResponseBody
+    public Product getProductByName(@PathVariable(value = "name") String name)
+    {
+        return productService.getProductByName(name);
     }
 }

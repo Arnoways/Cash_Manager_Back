@@ -48,6 +48,8 @@ public class CartService {
         Product product = productService.getProductById(productId);
         Set<Product> products = cart.getProduct();
         products.add(product);
+        cart.setQuantity(cart.getQuantity()+1);
+        cart.setTotal(cart.getTotal()+ product.getPrice());
         cartRepository.save(cart);
         return true;
 

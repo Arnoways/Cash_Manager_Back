@@ -15,6 +15,8 @@ import java.util.Set;
 
 public class Cart implements Serializable {
     public Cart() {
+        this.quantity = 0;
+        this.total = 0.0;
     }
 
     @Id
@@ -27,10 +29,8 @@ public class Cart implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
     private Set<Product> product = new HashSet<>();
 
-    @Value("0")
-    private Long quantity;
+    private int quantity;
 
-    @Value("0")
     private Double total;
 
 
@@ -41,7 +41,7 @@ public class Cart implements Serializable {
 
 
 
-    public Long getQuantity()
+    public int getQuantity()
     {
         return this.quantity;
     }
@@ -58,7 +58,7 @@ public class Cart implements Serializable {
     }
 
 
-    public void setQuantity(Long quantity)
+    public void setQuantity(int quantity)
     {
         this.quantity = quantity;
     }
