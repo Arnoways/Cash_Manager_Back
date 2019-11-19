@@ -42,6 +42,11 @@ public class CartService {
         return cartRepository.findAll();
     }
 
+    public void updateCart(Cart cart,Product product)
+    {
+        cart.setQuantity(cart.getQuantity()+1);
+        cart.setTotal(cart.getTotal()+product.getPrice());
+    }
     public boolean addToCart(Long userId, Long productId)
     {
         Cart cart = userService.getCart(userId);

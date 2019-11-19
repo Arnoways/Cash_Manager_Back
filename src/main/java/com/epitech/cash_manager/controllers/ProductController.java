@@ -4,6 +4,7 @@ import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.ProductRepository;
+import com.epitech.cash_manager.service.CartService;
 import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CartService cartService;
 
 
     @PostMapping(value="/api/products")
@@ -70,6 +74,7 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         return cartRepository.findById(cartId).map(cart -> {
             product.setCart(cart);
+            cartService.updateCart(cart,product);
             return productRepository.save(product);
         }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
