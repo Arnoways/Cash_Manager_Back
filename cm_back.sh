@@ -12,6 +12,7 @@ restart() {
 
 logs() {
   docker-compose logs -f back
+  docker-compose build back
 }
 
 clear() {

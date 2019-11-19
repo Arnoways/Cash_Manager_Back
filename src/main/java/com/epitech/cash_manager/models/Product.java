@@ -4,7 +4,8 @@ package com.epitech.cash_manager.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -21,17 +22,22 @@ public class Product implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", nullable = false)
+    @JoinColumn(name = "cart_id",nullable = true)
     private Cart cart;
 
-
+    @NotNull
+    @Size(max = 30)
     private String name;
+
+    @NotNull
+    @Size(max = 50)
+    private String description;
 
     private String image;
 
+    @NotNull
     private Double price;
 
-    private Double price_without_taxes;
 
 
     public Long getId()
@@ -54,11 +60,6 @@ public class Product implements Serializable {
         return this.price;
     }
 
-    public Double getPrice_without_taxes()
-    {
-        return this.price_without_taxes;
-    }
-
     public void setId(Long id)
     {
         this.id = id;
@@ -79,8 +80,19 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public void setPrice_without_taxes(Double price_without_taxes)
-    {
-        this.price_without_taxes = price_without_taxes;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
