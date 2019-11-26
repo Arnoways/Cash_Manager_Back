@@ -25,8 +25,8 @@ public class CartContent implements Serializable {
     @JoinColumn(name="product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cart_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Cart cart;

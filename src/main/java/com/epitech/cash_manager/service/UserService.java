@@ -7,6 +7,7 @@ import com.epitech.cash_manager.dto.UserRequestDto;
 import com.epitech.cash_manager.dto.UserResponseDto;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Cart;
+import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.User;
 import com.epitech.cash_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserService {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    CartContentService cartContentService;
+
 
     public UserResponseDto createUser(UserRequestDto in) {
         User user = null;
@@ -41,6 +45,8 @@ public class UserService {
             user.setLogin(in.getLogin());
             user.setPwd(in.getPwd());
             Cart cart = cartService.createCart();
+            CartContent cartContent = cartContentService.createCartContent();
+            cartContent.setCart(cart);
             user.setCart(cart);
             userRepository.save(user);
         }

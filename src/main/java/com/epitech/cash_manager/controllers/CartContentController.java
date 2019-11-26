@@ -5,6 +5,7 @@ import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.CartContentRepository;
 import com.epitech.cash_manager.repository.CartRepository;
+import com.epitech.cash_manager.service.CartContentService;
 import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,9 @@ public class CartContentController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CartContentService cartContentService;
 
     @GetMapping("api/carts/{cartId}/cartContents")
     public Page<CartContent> getAllCartContentsByCartId(@PathVariable (value = "cartId") Long cartId,
@@ -51,19 +55,32 @@ public class CartContentController {
         }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
 
+    @PostMapping("api/cartContent/{cartContentId}/{productId}/cartContents")
+    public CartContent addProductInCartContent(@PathVariable (value = "cartContentId") Long cartContentId,
+                                         @PathVariable (value = "productId") Long productId,
+                                         @Valid @RequestBody CartContent cartContentRequest) {
+        Product product = productService.getProductById(productId);
+        return cartContentRepository.findById(cartContentId).map(cartContent -> {
+            cartContent.setProduct(product);
+            return cartContentRepository.save(cartContent);
+        }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartContentId));
+    }
+
     @PutMapping("api/carts/{cartId}/cartContents/{cartContentId}")
     public CartContent updateCartContent(@PathVariable (value = "cartId") Long cartId,
                                  @PathVariable (value = "cartContentId") Long cartContentId,
-                                 @Valid @RequestBody CartContent cartContent) {
+                                 @Valid @RequestBody CartContent cartContentRequest) {
         if(!cartRepository.existsById(cartId)) {
             throw new ResourceNotFoundException("Cart", "id", cartId);
         }
 
-        return cartContentRepository.findById(cartContentId).map(comment -> {
-            cartContent.setQuantity(cartContent.getQuantity());
+        return cartContentRepository.findById(cartContentId).map(cartContent -> {
+            cartContent.setQuantity(cartContentRequest.getQuantity());
             return cartContentRepository.save(cartContent);
         }).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
     }
+
+
 
     @DeleteMapping("api/carts/{cartId}/cartContents/{cartContentId}")
     public ResponseEntity<?> deleteCartContent(@PathVariable (value = "cartId") Long cartId,
