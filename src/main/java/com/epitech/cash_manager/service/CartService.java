@@ -26,10 +26,7 @@ public class CartService {
     UserService userService;
 
     private Cart cart = new Cart();
-    public Set<Product> getAllProduct()
-    {
-        return cart.getProduct();
-    }
+
 
     public Cart createCart()
     {
@@ -44,33 +41,24 @@ public class CartService {
 
     public void updateCart(Cart cart,Product product)
     {
-        cart.setQuantity(cart.getQuantity()+1);
+
         cart.setTotal(cart.getTotal()+product.getPrice());
     }
-    public boolean addToCart(Long userId, Long productId)
-    {
-        Cart cart = userService.getCart(userId);
-        Product product = productService.getProductById(productId);
-        Set<Product> products = cart.getProduct();
-        products.add(product);
-        cart.setQuantity(cart.getQuantity()+1);
-        cart.setTotal(cart.getTotal()+ product.getPrice());
-        cartRepository.save(cart);
-        return true;
 
-    }
+    //public boolean addToCart(Long userId, Long productId)
+    //{
+        //Cart cart = userService.getCart(userId);
+        //Product product = productService.getProductById(productId);
+        //Set<Product> products = cart.getProduct();
+        //products.add(product);
+        //cart.setQuantity(cart.getQuantity()+1);
+        //cart.setTotal(cart.getTotal()+ product.getPrice());
+        //cartRepository.save(cart);
+        //return true;
 
-    public Product addProduct(Product product)
-    {
-        cart.getProduct().add(product);
-        return product;
-    }
+    //}
 
-    public void deleteProduct(Long productId)
-    {
-        Product p = productService.getProductById(productId);
-        cart.getProduct().remove(p);
-    }
+
 
     public Cart getCartById(Long cartId)
     {

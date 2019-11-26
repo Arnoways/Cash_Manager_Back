@@ -22,11 +22,6 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "cart_id",nullable = true)
-    private Cart cart;
-
     @NotNull
     @Size(max = 30)
     private String name;
@@ -90,11 +85,4 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Cart getCart() {
-        return this.cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 }

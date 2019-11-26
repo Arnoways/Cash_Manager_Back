@@ -16,7 +16,6 @@ import java.util.Set;
 
 public class Cart implements Serializable {
     public Cart() {
-        this.quantity = 0;
         this.total = 0.0;
     }
 
@@ -28,11 +27,7 @@ public class Cart implements Serializable {
     @OneToOne(mappedBy = "cart", targetEntity = User.class)
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cart", targetEntity = Product.class)
-    private Set<Product> product = new HashSet<>();
 
-    private int quantity;
 
     private Double total;
 
@@ -43,11 +38,6 @@ public class Cart implements Serializable {
     }
 
 
-
-    public int getQuantity()
-    {
-        return this.quantity;
-    }
 
 
     public Double getTotal()
@@ -60,11 +50,6 @@ public class Cart implements Serializable {
         this.id = id;
     }
 
-
-    public void setQuantity(int quantity)
-    {
-        this.quantity = quantity;
-    }
 
 
     public void setTotal(Double total)
@@ -79,14 +64,5 @@ public class Cart implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-
-    public Set<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Set<Product> product) {
-        this.product = product;
     }
 }

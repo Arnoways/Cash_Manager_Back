@@ -53,8 +53,6 @@ public class CartController{
     {
         Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
         cart.setUser(cartDetails.getUser());
-        cart.setProduct(cartDetails.getProduct());
-        cart.setQuantity(cartDetails.getQuantity());
         cart.setTotal(cartDetails.getTotal());
         cart.setTotal(cartDetails.getTotal());
         Cart updatedCart = cartRepository.save(cart);

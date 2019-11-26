@@ -60,42 +60,6 @@ public class ProductController {
     }
 
 
-    @GetMapping("/api/carts/{cartId}/products")
-    public Page<Product> getAllProductByCartId(@PathVariable (value = "cartId") Long cartId,
-                                                Pageable pageable) {
-        return productRepository.findByCartId(cartId, pageable);
-    }
-
-
-
-    @PostMapping("/api/carts/{cartId}/{productId}")
-    public Product createProductWithCartId(@PathVariable (value = "cartId") Long cartId,
-                                           @PathVariable (value = "productId") Long productId) {
-        Product product = productService.getProductById(productId);
-        return cartRepository.findById(cartId).map(cart -> {
-            product.setCart(cart);
-            cartService.updateCart(cart,product);
-            return productRepository.save(product);
-        }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
-    }
-
-
-    @PutMapping("/carts/{cartId}/products/{productId}")
-    public Product updateProductWithCartId(@PathVariable (value = "cartId") Long cartId,
-                                 @PathVariable (value = "productId") Long productId,
-                                 @Valid @RequestBody Product productRequest) {
-        if(!cartRepository.existsById(cartId)) {
-            throw new ResourceNotFoundException("Cart", "id", cartId);
-        }
-
-        return productRepository.findById(productId).map(product -> {
-            product.setName(productRequest.getName());
-            product.setImage(productRequest.getImage());
-            product.setPrice(productRequest.getPrice());
-            return productRepository.save(product);
-        }).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-    }
-
     @PutMapping("/api/product/{id}")
     public Product updateProduct(@PathVariable(value = "id") Long productId,@Valid @RequestBody Product productDetails)
     {
@@ -105,15 +69,6 @@ public class ProductController {
         product.setPrice(productDetails.getPrice());
 
         return productRepository.save(product);
-    }
-
-    @DeleteMapping("/api/carts/{cartId}/products/{productId}")
-    public ResponseEntity<?> deleteProductWithCartId(@PathVariable (value = "cartId") Long cartId,
-                                           @PathVariable (value = "productId") Long productId) {
-        return productRepository.findByIdAndCartId(productId, cartId).map(product -> {
-            productRepository.delete(product);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }
 
     @DeleteMapping("/api/product/{id}")
