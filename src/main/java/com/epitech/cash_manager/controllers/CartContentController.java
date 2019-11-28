@@ -49,6 +49,9 @@ public class CartContentController {
                                  @Valid @RequestBody CartContent cartContent) {
         Product product = productService.getProductById(productId);
         return cartRepository.findById(cartId).map(cart -> {
+            int qty = cartContent.getQuantity();
+            double price = qty * product.getPrice();
+            cart.setTotal(cart.getTotal() + price);
             cartContent.setCart(cart);
             cartContent.setProduct(product);
             return cartContentRepository.save(cartContent);
