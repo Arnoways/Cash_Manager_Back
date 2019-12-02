@@ -2,6 +2,7 @@ package com.epitech.cash_manager.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -15,22 +16,19 @@ import java.util.Set;
 
 public class Cart implements Serializable {
     public Cart() {
+        this.total = 0.0;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "cart", targetEntity = User.class)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
-    private Set<Product> product = new HashSet<>();
 
-    @Value("0")
-    private Long quantity;
 
-    @Value("0")
     private Double total;
 
 
@@ -40,11 +38,6 @@ public class Cart implements Serializable {
     }
 
 
-
-    public Long getQuantity()
-    {
-        return this.quantity;
-    }
 
 
     public Double getTotal()
@@ -57,11 +50,6 @@ public class Cart implements Serializable {
         this.id = id;
     }
 
-
-    public void setQuantity(Long quantity)
-    {
-        this.quantity = quantity;
-    }
 
 
     public void setTotal(Double total)
@@ -76,14 +64,5 @@ public class Cart implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-
-    public Set<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(Set<Product> product) {
-        this.product = product;
     }
 }

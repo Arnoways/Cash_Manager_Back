@@ -1,6 +1,7 @@
 package com.epitech.cash_manager.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -20,10 +21,6 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id",nullable = true)
-    private Cart cart;
 
     @NotNull
     @Size(max = 30)
@@ -88,11 +85,4 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 }

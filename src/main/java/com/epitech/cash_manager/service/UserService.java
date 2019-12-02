@@ -7,6 +7,7 @@ import com.epitech.cash_manager.dto.UserRequestDto;
 import com.epitech.cash_manager.dto.UserResponseDto;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Cart;
+import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.User;
 import com.epitech.cash_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +29,8 @@ public class UserService {
     @Autowired
     CartService cartService;
 
-    /*@Autowired
-    private PasswordEncoder passwordEncoder;*/
-
-
-    public User getUserByEmail(String email) {
-
-        return userDAO.findByEmail(email);
-    }
-
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
+    @Autowired
+    CartContentService cartContentService;
 
 
     public UserResponseDto createUser(UserRequestDto in) {
@@ -53,12 +44,21 @@ public class UserService {
             user.setEmail(in.getEmail().toLowerCase());
             user.setLogin(in.getLogin());
             user.setPwd(in.getPwd());
-            Cart cart = cartService.createCart();
-            user.setCart(cart);
+            //Cart cart = cartService.createCart();
+            //CartContent cartContent = cartContentService.createCartContent();
+            //cartContent.setCart(cart);
+            //user.setCart(cart);
             userRepository.save(user);
         }
         return new UserResponseDto(user.getId(), user.getEmail(), user.getLogin());
     }
+
+
+    public User getUserByEmail(String email) {
+
+        return userDAO.findByEmail(email);
+    }
+
 
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
@@ -84,10 +84,6 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "userID", userID));
     }
 
-    public void deleteUser(Long userID) {
-        User user = userRepository.findById(userID).orElseThrow(() -> new ResourceNotFoundException("User", "userID",userID));
-        userRepository.delete(user);
-    }
 
     public Cart getCart(Long userId)
     {
