@@ -23,7 +23,10 @@ public class CartContent implements Serializable {
 
     @OneToOne
     @JoinColumn(name="product_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Product product;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")

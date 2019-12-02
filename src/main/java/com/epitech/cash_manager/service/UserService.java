@@ -44,10 +44,10 @@ public class UserService {
             user.setEmail(in.getEmail().toLowerCase());
             user.setLogin(in.getLogin());
             user.setPwd(in.getPwd());
-            Cart cart = cartService.createCart();
-            CartContent cartContent = cartContentService.createCartContent();
-            cartContent.setCart(cart);
-            user.setCart(cart);
+            //Cart cart = cartService.createCart();
+            //CartContent cartContent = cartContentService.createCartContent();
+            //cartContent.setCart(cart);
+            //user.setCart(cart);
             userRepository.save(user);
         }
         return new UserResponseDto(user.getId(), user.getEmail(), user.getLogin());

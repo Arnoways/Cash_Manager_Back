@@ -41,7 +41,7 @@ public class CartContentService {
 
     public CartContent getCartContentById(Long cartContentId)
     {
-        return cartContentRepository.findById(cartContentId).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartContentId));
+        return cartContentRepository.findById(cartContentId).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
     }
 
 

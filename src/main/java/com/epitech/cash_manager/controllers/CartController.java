@@ -1,8 +1,11 @@
 package com.epitech.cash_manager.controllers;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Cart;
+import com.epitech.cash_manager.models.Product;
+import com.epitech.cash_manager.models.User;
 import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.service.CartService;
+import com.epitech.cash_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,9 @@ public class CartController{
     @Autowired
     CartService cartService;
 
+    @Autowired
+    UserService userService;
+
 
 
     @GetMapping(value ="/api/carts")
@@ -26,9 +32,13 @@ public class CartController{
     }
 
 
-    @PostMapping(value = "/api/carts")
-    public Cart createCart(@Valid @RequestBody Cart cart)
+    @PostMapping(value = "/api/{userId}/carts")
+    public Cart createCart(@PathVariable (value = "userId") Long userId,
+                           @Valid @RequestBody Cart cart)
     {
+        User user = userService.getUserById(userId);
+        user.setCart(cart);
+        cart.setUser(user);
         return cartRepository.save(cart);
     }
 
