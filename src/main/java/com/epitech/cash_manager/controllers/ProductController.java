@@ -76,6 +76,18 @@ public class ProductController {
         return productRepository.save(product);
     }
 
+    @GetMapping(value = "/api/products/cartContent/{cartId}")
+    public Iterable<Product> getAllProducts(@PathVariable (value = "cartId") Long cartId)
+    {
+        List<Product> product = new ArrayList<>();
+        List<CartContent> cartContent = cartContentRepository.findByCartId(cartId);
+        for (CartContent c : cartContent)
+        {
+            product.add(c.getProduct());
+        }
+        return product;
+    }
+
     @DeleteMapping("/api/product/{id}")
     public Product deleteProduct(@PathVariable(value="id") Long productId)
     {
@@ -85,18 +97,6 @@ public class ProductController {
         return product;
     }
 
-    @GetMapping(value = "/api/products/cartContent/{cartId}")
-    public Iterable<Product> getAllProducts(@PathVariable (value = "cartId") Long cartId)
-    {
-        List<Product> product = new ArrayList<>();
-        List<CartContent> cartContent = cartContentRepository.findByCartId(cartId);
-        for (CartContent c : cartContent
-             ) {
-            product.add(c.getProduct());
-        }
-        return product;
-
-    }
 
 
 }
