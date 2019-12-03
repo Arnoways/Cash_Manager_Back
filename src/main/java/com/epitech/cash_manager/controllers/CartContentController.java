@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class CartContentController {
@@ -31,16 +32,14 @@ public class CartContentController {
     @Autowired
     private CartContentService cartContentService;
 
-    @GetMapping("api/cartContents/{cartId}")
-    public Page<CartContent> getAllCartContentsByCartId(@PathVariable (value = "cartId") Long cartId,
-                                                Pageable pageable) {
-        return cartContentRepository.findByCartId(cartId, pageable);
+    @GetMapping("api/cartContent/cart/{cartId}")
+    public List<CartContent> getAllCartContentsByCartId(@PathVariable (value = "cartId") Long cartId) {
+        return cartContentRepository.findByCartId(cartId);
     }
 
-    @GetMapping("api/cartContents/{productId}")
-    public Page<CartContent> getAllCartContentsByProductId(@PathVariable (value = "productId") Long productId,
-                                                        Pageable pageable) {
-        return cartContentRepository.findByProductId(productId, pageable);
+    @GetMapping("api/cartContent/product/{productId}")
+    public List<CartContent> getAllCartContentsByProductId(@PathVariable (value = "productId") Long productId) {
+        return cartContentRepository.findByProductId(productId);
     }
 
     @GetMapping("api/cartContent/{id}")
@@ -92,12 +91,12 @@ public class CartContentController {
 
 
 
-    @DeleteMapping("api/carts/{cartId}/cartContents/{cartContentId}")
-    public ResponseEntity<?> deleteCartContent(@PathVariable (value = "cartId") Long cartId,
-                                           @PathVariable (value = "cartContentId") Long cartContentId) {
-        return cartContentRepository.findByIdAndCartId(cartContentId, cartId).map(cartContent -> {
-            cartContentRepository.delete(cartContent);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
-    }
+    //@DeleteMapping("api/carts/{cartId}/cartContents/{cartContentId}")
+    //public ResponseEntity<?> deleteCartContent(@PathVariable (value = "cartId") Long cartId,
+                                           //@PathVariable (value = "cartContentId") Long cartContentId) {
+        //return cartContentRepository.findByIdAndCartId(cartContentId, cartId).map(cartContent -> {
+            //cartContentRepository.delete(cartContent);
+            //return ResponseEntity.ok().build();
+        //}).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
+    //}
 }

@@ -3,8 +3,11 @@ package com.epitech.cash_manager.controllers;
 import com.epitech.cash_manager.dto.UserRequestDto;
 import com.epitech.cash_manager.dto.UserResponseDto;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
+import com.epitech.cash_manager.models.Cart;
 import com.epitech.cash_manager.models.User;
+import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.UserRepository;
+import com.epitech.cash_manager.service.CartService;
 import com.epitech.cash_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CartRepository cartRepository;
 
 
     @GetMapping(value="/api/users")
@@ -61,9 +67,13 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/api/users/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long userId)
+    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId)
     {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        Cart cart = user.getCart();
+        cart.setUser(null);
+        user.setCart(null);
+        cartRepository.delete(cart);
         userRepository.delete(user);
         return ResponseEntity.ok().build();
     }

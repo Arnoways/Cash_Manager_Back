@@ -42,13 +42,6 @@ public class CartController{
         return cartRepository.save(cart);
     }
 
-    //@PostMapping(value = "/api/carts/{userId}/{productId}")
-    //public boolean addProductToCart(@PathVariable(value = "userId") Long userId,
-                                    //@PathVariable(value = "productId") Long productId)
-    //{
-        //return cartService.addToCart(userId,productId);
-    //}
-
 
     @GetMapping(value = "/api/carts/{id}")
     public Cart getCartById(@PathVariable(value="id") Long cartId)
@@ -69,22 +62,17 @@ public class CartController{
         return updatedCart;
     }
 
-    @DeleteMapping(value = "/api/carts/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long cartId)
+    @DeleteMapping("/api/cart/{id}")
+    public Cart deleteCart(@PathVariable(value="id") Long cartId)
     {
-        Cart cart= cartRepository.findById(cartId).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
+
+        cart.getUser().setCart(null);
+        cart.setUser(null);
         cartRepository.delete(cart);
-        return ResponseEntity.ok().build();
 
+        return cart;
     }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/api/carts/{userId}/all")
-    public Iterable<Cart> getAllProducts(@PathVariable(value="userId") Long userId)
-    {
-        return cartService.getCart(userId);
-    }
-
-
 
 
 }

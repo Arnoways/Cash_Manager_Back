@@ -1,19 +1,20 @@
 package com.epitech.cash_manager.controllers;
 
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
+import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.Product;
+import com.epitech.cash_manager.repository.CartContentRepository;
 import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.ProductRepository;
 import com.epitech.cash_manager.service.CartService;
 import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -29,6 +30,10 @@ public class ProductController {
 
     @Autowired
     CartService cartService;
+
+    @Autowired
+    CartContentRepository cartContentRepository;
+
 
 
     @PostMapping(value="/api/products")
@@ -79,4 +84,19 @@ public class ProductController {
 
         return product;
     }
+
+    @GetMapping(value = "/api/products/cartContent/{cartId}")
+    public Iterable<Product> getAllProducts(@PathVariable (value = "cartId") Long cartId)
+    {
+        List<Product> product = new ArrayList<>();
+        List<CartContent> cartContent = cartContentRepository.findByCartId(cartId);
+        for (CartContent c : cartContent
+             ) {
+            product.add(c.getProduct());
+        }
+        return product;
+
+    }
+
+
 }
