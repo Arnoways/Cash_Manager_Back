@@ -60,16 +60,6 @@ public class CartContentController {
         }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
 
-    //@PostMapping("api/cartContent/{cartContentId}/{productId}/cartContents")
-    //public CartContent addProductInCartContent(@PathVariable (value = "cartContentId") Long cartContentId,
-                                         //@PathVariable (value = "productId") Long productId,
-                                         //@Valid @RequestBody CartContent cartContentRequest) {
-        //Product product = productService.getProductById(productId);
-        //return cartContentRepository.findById(cartContentId).map(cartContent -> {
-            //cartContent.setProduct(product);
-            //return cartContentRepository.save(cartContent);
-        //}).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartContentId));
-    //}
 
     @PutMapping("api/carts/{cartId}/cartContents/{cartContentId}")
     public CartContent updateCartContent(@PathVariable (value = "cartId") Long cartId,
