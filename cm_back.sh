@@ -4,6 +4,7 @@ set -e
 
 build() {
   docker-compose up --build maven
+  docker-compose build back
 }
 
 restart() {
@@ -12,6 +13,7 @@ restart() {
 
 logs() {
   docker-compose logs -f back
+  docker-compose build back
 }
 
 clear() {
@@ -28,7 +30,7 @@ up() {
 }
 
 deploy() {
-  cd ~/Cash_Manager_Back
+  cd $(pwd)/Cash_Manager_Back
   git pull
   up
 }
@@ -36,7 +38,7 @@ deploy() {
 apk() {
   if [ ! -d "../Cash_Manager_Front" ]; then
     echo "Folder cash manager doesn't exists! Downloading..."
-    git clone git@github.com:Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front || git clone https://github.com/Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front
+    git clone https://github.com/Arnoways/Cash_Manager_Front.git ../Cash_Manager_Front
   fi
   docker-compose build gradle
   docker-compose up gradle
@@ -55,7 +57,7 @@ help() {
   exit 0
 }
 
-if [ $# -eq 0 ]
+if [ $# -ne 1 ]
   then
     help
 fi
