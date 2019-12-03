@@ -1,7 +1,6 @@
 package com.epitech.cash_manager.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 

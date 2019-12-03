@@ -75,14 +75,4 @@ public class CartContentController {
         }).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
     }
 
-
-
-    //@DeleteMapping("api/carts/{cartId}/cartContents/{cartContentId}")
-    //public ResponseEntity<?> deleteCartContent(@PathVariable (value = "cartId") Long cartId,
-                                           //@PathVariable (value = "cartContentId") Long cartContentId) {
-        //return cartContentRepository.findByIdAndCartId(cartContentId, cartId).map(cartContent -> {
-            //cartContentRepository.delete(cartContent);
-            //return ResponseEntity.ok().build();
-        //}).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
-    //}
 }
