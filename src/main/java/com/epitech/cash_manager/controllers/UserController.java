@@ -7,7 +7,6 @@ import com.epitech.cash_manager.models.Cart;
 import com.epitech.cash_manager.models.User;
 import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.repository.UserRepository;
-import com.epitech.cash_manager.service.CartService;
 import com.epitech.cash_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +31,6 @@ public class UserController {
     {
         return userService.getAllUsers();
     }
-
-
-    //@PostMapping(value="/api/users")
-    //public User createUser (@Valid @RequestBody User user)
-    //{
-        //return userRepository.save(user);
-    //}
 
 
     @GetMapping(value="api/users/{id}")
