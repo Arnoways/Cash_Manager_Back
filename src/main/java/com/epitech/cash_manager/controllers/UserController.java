@@ -70,10 +70,12 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long userId)
     {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        Cart cart = user.getCart();
-        cart.setUser(null);
-        user.setCart(null);
-        cartRepository.delete(cart);
+        if (user.getCart()!= null) {
+            Cart cart = user.getCart();
+            cart.setUser(null);
+            user.setCart(null);
+            cartRepository.delete(cart);
+        }
         userRepository.delete(user);
         return ResponseEntity.ok().build();
     }

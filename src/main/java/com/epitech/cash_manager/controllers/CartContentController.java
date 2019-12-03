@@ -1,7 +1,6 @@
 package com.epitech.cash_manager.controllers;
 
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
-import com.epitech.cash_manager.models.Cart;
 import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.CartContentRepository;
@@ -9,9 +8,6 @@ import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.service.CartContentService;
 import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

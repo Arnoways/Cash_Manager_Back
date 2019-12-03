@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -57,8 +58,7 @@ public class ProductController {
     }
 
 
-    @GetMapping()
-    @ResponseBody
+    @GetMapping(value="/api/products/name/{name}")
     public Product getProductByName(@PathVariable(value = "name") String name)
     {
         return productService.getProductByName(name);
@@ -77,7 +77,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/api/products/cartContent/{cartId}")
-    public Iterable<Product> getAllProducts(@PathVariable (value = "cartId") Long cartId)
+    public Iterable<Product> getAllProductsByCartId(@PathVariable (value = "cartId") Long cartId)
     {
         List<Product> product = new ArrayList<>();
         List<CartContent> cartContent = cartContentRepository.findByCartId(cartId);
@@ -89,14 +89,37 @@ public class ProductController {
     }
 
     @DeleteMapping("/api/product/{id}")
-    public Product deleteProduct(@PathVariable(value="id") Long productId)
+    public void deleteProduct(@PathVariable(value="id") Long productId)
     {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-        productRepository.delete(product);
-
-        return product;
+        List<CartContent> cartContent = cartContentRepository.findByProductId(productId);
+        for (CartContent c : cartContent)
+        {
+            c.getCart().setTotal(c.getCart().getTotal() - c.getProduct().getPrice());
+            productRepository.delete(c.getProduct());
+        }
     }
 
+    @DeleteMapping("/api/product/cartContent/{cartContentId}")
+    public void deleteProductInCartContentWithCartContentId(@PathVariable(value="cartContentId") Long cartContentId)
+    {
+        CartContent cartContent = cartContentRepository.findById(cartContentId).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
+        cartContent.getCart().setTotal(cartContent.getCart().getTotal() - cartContent.getProduct().getPrice());
+        cartContent.setProduct(null);
+        cartContent.setCart(null);
+        cartContentRepository.delete(cartContent);
+    }
 
+    @DeleteMapping("/api/product/cart/{cartId}")
+    public void deleteProductInCartContentWithCartId(@PathVariable(value="cartId") Long cartId)
+    {
+        List<CartContent> cartContent = cartContentRepository.findByCartId(cartId);
+        for (CartContent c : cartContent)
+        {
+            c.getCart().setTotal(c.getCart().getTotal() - c.getProduct().getPrice());
+            c.setProduct(null);
+            c.setCart(null);
+            cartContentRepository.delete(c);
+        }
+    }
 
 }
