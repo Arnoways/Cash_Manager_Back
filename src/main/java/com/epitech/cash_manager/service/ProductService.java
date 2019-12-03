@@ -1,8 +1,7 @@
 package com.epitech.cash_manager.service;
 
 
-import
-        com.epitech.cash_manager.dao.ProductDAO;
+import com.epitech.cash_manager.dao.ProductDAO;
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.ProductRepository;

@@ -70,17 +70,6 @@ public class TokenService {
                 && tokenData.getExpireDate() > Calendar.getInstance().getTimeInMillis();
     }
 
-    /*public boolean isTokenValid(Long userID, String xsrf_token) {
-        User user = userService.getUserById(userID);
-        if (user == null)
-            return false;
-        TokenData tokenData = this.getTokenData(user.getToken());
-        if (tokenData == null)
-            return false;
-        if (!tokenData.getXsrfToken().equals(xsrf_token))
-            return false;
-        return true;
-    }*/
 
     public static String generateRandomString(int length) {
         // You can customize the characters that you want to add into

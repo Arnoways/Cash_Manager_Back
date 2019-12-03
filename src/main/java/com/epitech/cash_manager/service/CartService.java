@@ -8,7 +8,6 @@ import com.epitech.cash_manager.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 
 @Service
 public class CartService {
@@ -44,20 +43,6 @@ public class CartService {
 
         cart.setTotal(cart.getTotal()+product.getPrice());
     }
-
-    //public boolean addToCart(Long userId, Long productId)
-    //{
-        //Cart cart = userService.getCart(userId);
-        //Product product = productService.getProductById(productId);
-        //Set<Product> products = cart.getProduct();
-        //products.add(product);
-        //cart.setQuantity(cart.getQuantity()+1);
-        //cart.setTotal(cart.getTotal()+ product.getPrice());
-        //cartRepository.save(cart);
-        //return true;
-
-    //}
-
 
 
     public Cart getCartById(Long cartId)

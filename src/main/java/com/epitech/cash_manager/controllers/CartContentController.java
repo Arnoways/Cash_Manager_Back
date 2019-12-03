@@ -1,7 +1,6 @@
 package com.epitech.cash_manager.controllers;
 
 import com.epitech.cash_manager.exception.ResourceNotFoundException;
-import com.epitech.cash_manager.models.Cart;
 import com.epitech.cash_manager.models.CartContent;
 import com.epitech.cash_manager.models.Product;
 import com.epitech.cash_manager.repository.CartContentRepository;
@@ -9,12 +8,10 @@ import com.epitech.cash_manager.repository.CartRepository;
 import com.epitech.cash_manager.service.CartContentService;
 import com.epitech.cash_manager.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class CartContentController {
@@ -31,16 +28,14 @@ public class CartContentController {
     @Autowired
     private CartContentService cartContentService;
 
-    @GetMapping("api/cartContents/{cartId}")
-    public Page<CartContent> getAllCartContentsByCartId(@PathVariable (value = "cartId") Long cartId,
-                                                Pageable pageable) {
-        return cartContentRepository.findByCartId(cartId, pageable);
+    @GetMapping("api/cartContent/cart/{cartId}")
+    public List<CartContent> getAllCartContentsByCartId(@PathVariable (value = "cartId") Long cartId) {
+        return cartContentRepository.findByCartId(cartId);
     }
 
-    @GetMapping("api/cartContents/{productId}")
-    public Page<CartContent> getAllCartContentsByProductId(@PathVariable (value = "productId") Long productId,
-                                                        Pageable pageable) {
-        return cartContentRepository.findByProductId(productId, pageable);
+    @GetMapping("api/cartContent/product/{productId}")
+    public List<CartContent> getAllCartContentsByProductId(@PathVariable (value = "productId") Long productId) {
+        return cartContentRepository.findByProductId(productId);
     }
 
     @GetMapping("api/cartContent/{id}")
@@ -65,16 +60,6 @@ public class CartContentController {
         }).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartId));
     }
 
-    //@PostMapping("api/cartContent/{cartContentId}/{productId}/cartContents")
-    //public CartContent addProductInCartContent(@PathVariable (value = "cartContentId") Long cartContentId,
-                                         //@PathVariable (value = "productId") Long productId,
-                                         //@Valid @RequestBody CartContent cartContentRequest) {
-        //Product product = productService.getProductById(productId);
-        //return cartContentRepository.findById(cartContentId).map(cartContent -> {
-            //cartContent.setProduct(product);
-            //return cartContentRepository.save(cartContent);
-        //}).orElseThrow(() -> new ResourceNotFoundException("Cart", "id", cartContentId));
-    //}
 
     @PutMapping("api/carts/{cartId}/cartContents/{cartContentId}")
     public CartContent updateCartContent(@PathVariable (value = "cartId") Long cartId,
@@ -90,14 +75,4 @@ public class CartContentController {
         }).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
     }
 
-
-
-    @DeleteMapping("api/carts/{cartId}/cartContents/{cartContentId}")
-    public ResponseEntity<?> deleteCartContent(@PathVariable (value = "cartId") Long cartId,
-                                           @PathVariable (value = "cartContentId") Long cartContentId) {
-        return cartContentRepository.findByIdAndCartId(cartContentId, cartId).map(cartContent -> {
-            cartContentRepository.delete(cartContent);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("CartContent", "id", cartContentId));
-    }
 }
